@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-// import candidateData from '/model/candidate.json';
+// import candidateData from '../model/candidate.json';
 
 export default function Students() {
 	const [students, setStudents] = useState([])
@@ -10,28 +10,20 @@ export default function Students() {
 	// console.log(students)
 
 	useEffect(() => {
-		const token = localStorage.getItem('token')
+		const token = localStorage.getItem('token');
 		if (!token) return;
 
 		(async () => {
 			try {
-				const res = await fetch('/cdcc-react-app/model/candidate.json');
-				if (!res.ok) {
-					console.error("Failed to load candidate.json");
-					return;
-				}
-
+				const res = await fetch('/cdcc-react-app/model/candidate.json'); // notice path from public/
+				if (!res.ok) throw new Error('Failed to fetch JSON');
 				const data = await res.json();
 				setStudents(data);
-
 			} catch (error) {
-				console.error("Fetch error:", error);
+				console.error('Fetch error:', error);
 			}
 		})();
-
 	}, [navigate]);
-
-
 
 	const filtered = useMemo(() => {
 		const q = search.trim().toLowerCase()
