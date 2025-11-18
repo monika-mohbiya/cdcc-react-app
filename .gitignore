@@ -1,6 +1,7 @@
 node_modules/
 dist/
-
+.vite/
+.env
 deploy_key
 deploy_key.pub
 
